@@ -1,4 +1,4 @@
-# Req
+# Req-cli
 
 Req is a commandline HTTP client which stores its configuration in a file called Reqfile.
 

@@ -1,7 +1,10 @@
-#!env ruby
-
 require 'thor'
 require 'yaml'
+
+load 'lib/context.rb'
+load 'lib/environment.rb'
+load 'lib/request.rb'
+load 'lib/config.rb'
 
 STATEFILE = '.reqstate'
 REQFILE = 'Reqfile'
@@ -15,19 +18,28 @@ class State
 end
 
 class Req < Thor
-  @config
-  @state
+
+  attr_accessor :config, :state
+  @config = nil
+  @state = nil
+
+  def self.create_with_config(config)
+    req = Req.new
+    req.config = config
+    req.state = State.new
+    req
+  end
 
   desc "contexts", "list all contexts"
   def contexts
-    load_config # TODO avoid this
-    @config['contexts'].keys.each {|name| puts name }
+    init # TODO avoid this
+    @config.contexts.each {|ctx| puts ctx.name }
   end
 
   desc "context NAME", "switch to context NAME"
   def context(name)
-    load_config
-    if @config['contexts'].keys.include? name
+    init
+    if @config.contexts.any? { |ctx| ctx.name == name }
       puts "switching to context #{name}"
       @state.context = name
       save_state
@@ -39,14 +51,14 @@ class Req < Thor
 
   desc "environments", "list all environments"
   def environments
-    load_config # TODO avoid this
-    @config['environments'].keys.each {|name| puts name }
+    init
+    @config.environments.each {|env| puts env.name }
   end
 
   desc "environment", "switch to environment"
   def environment(name)
-    load_config
-    if @config['environments'].keys.include? name
+    init
+    if @config.has_environment? name
       puts "switching to environment #{name}"
       @state.environment = name
       save_state
@@ -58,14 +70,14 @@ class Req < Thor
 
   desc "variable NAME VALUE", "add variable with key NAME and value VALUE"
   def variable(name, value)
-    load_config
+    init
     @state.variables[name] = value
     save_state
   end
 
   desc "status", "print current environment and context info"
   def status
-    load_config
+    init
     puts "context: #{@state.context}"
     puts "environment: #{@state.environment}"
     puts "variables: " # TODO print custom variables
@@ -83,10 +95,18 @@ class Req < Thor
     puts "executing request"
   end
 
+  desc "requests", "list all requests"
+  def requests
+    init
+    # TODO provide nice formatting with each column aligned
+    @config.requests.each {|req| puts "#{req.name} - #{req.method} #{req.path}"}
+  end
+
   no_commands do
-    def load_config
+    def init
+      return if @config
       @state = State.new
-      @config = YAML.load(File.read(REQFILE))
+      @config = Config.create_from_yaml(File.read(REQFILE))
       if File.exist? '.reqstate'
         @state = YAML.load(File.read(STATEFILE))
       end
@@ -97,5 +117,3 @@ class Req < Thor
     end
   end
 end
-
-Req.start(ARGV)

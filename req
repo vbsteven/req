@@ -1,0 +1,5 @@
+#!env ruby
+
+load 'lib/req.rb'
+
+Req.start(ARGV)

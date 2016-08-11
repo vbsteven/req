@@ -1,0 +1,33 @@
+---
+environments:
+  - name: production
+    endpoint: https://example.com
+    vars:
+      app_id: 1
+  - name: staging
+    endpoint: https://staging.example.com
+    vars:
+      app_id: 2
+  - name: development
+    endpoint: https://localhost
+    vars:
+      app_id: 3
+
+contexts:
+  - name: context1
+    vars: 
+      session_token: 123456
+      user_id: 12
+      username: steven
+  - name: context2
+    vars: 
+      session_token: 789012
+      user_id: 42
+      username: birgit
+
+requests:
+  - name: exampleRequest
+    path: /example/path
+    method: GET
+    headers:
+      Content-Type: "application/json"
