@@ -3,7 +3,7 @@ class Context
 
   def initialize(hash)
     @name = hash[:name] || hash['name'] || 'default_context'
-    @variables = hash[:variables] || hash['variables']
+    @variables = hash[:vars] || hash['vars'] || {}
   end
 
 end

@@ -4,18 +4,13 @@ require 'yaml'
 load 'lib/context.rb'
 load 'lib/environment.rb'
 load 'lib/request.rb'
+load 'lib/state.rb'
 load 'lib/config.rb'
+load 'lib/request_executor.rb'
 
 STATEFILE = '.reqstate'
 REQFILE = 'Reqfile'
 
-class State
-  attr_accessor :context, :environment, :variables
-
-  def initialize
-    @variables = {}
-  end
-end
 
 class Req < Thor
 
@@ -93,6 +88,7 @@ class Req < Thor
   desc "exec REQUESTNAME", "execute request with name REQUESTNAME"
   def exec(requestname)
     puts "executing request"
+    executor = RequestExecutor.new requestname, @config, @state
   end
 
   desc "requests", "list all requests"

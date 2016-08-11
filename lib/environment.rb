@@ -4,7 +4,7 @@ class Environment
   def initialize(hash)
     @name = hash[:name] || hash['name'] || ''
     @endpoint = hash[:endpoint] || hash['endpoint'] || ''
-    @variables = hash[:variables] || hash['variables']
+    @variables = hash[:vars] || hash['vars'] || {}
 
     # TODO raise exceptions when @name or @endpoint is nil or empty
   end
