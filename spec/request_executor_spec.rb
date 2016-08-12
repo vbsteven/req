@@ -13,4 +13,11 @@ describe 'RequestExecutor' do
       expect(executor.merged_variables.keys).to include('custom_variable')
     end
   end
+
+  context 'uri' do
+    let(:executor) { RequestExecutor.new 'exampleRequest', req.config, req.state }
+    it 'combines environment.destination and request.path' do
+      expect(executor.uri).to eq 'https://example.com/example/path'
+    end
+  end
 end

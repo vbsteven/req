@@ -70,5 +70,16 @@ describe 'Config class' do
       expect(config.get_environment('production').name).to eq 'production'
       expect(config.get_environment('bogus_environment')).to be_nil 
     end
+
+    it 'implements has_request?' do
+      expect(config.has_request?('exampleRequest')).to be
+      expect(config.has_request?('bogus_request')).not_to be
+    end
+
+    it 'implements get_request' do
+      expect(config.get_request('exampleRequest')).to be_kind_of Request
+      expect(config.get_request('exampleRequest').name).to eq 'exampleRequest'
+      expect(config.get_request('bogus_request')).to be_nil 
+    end
   end
 end

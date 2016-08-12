@@ -86,9 +86,11 @@ class Req < Thor
   end
 
   desc "exec REQUESTNAME", "execute request with name REQUESTNAME"
+  option :verbose, type: :boolean, aliases: '-v'
   def exec(requestname)
-    puts "executing request"
-    executor = RequestExecutor.new requestname, @config, @state
+    init
+    executor = RequestExecutor.new requestname, @config, @state, options
+    executor.execute
   end
 
   desc "requests", "list all requests"

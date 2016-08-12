@@ -33,4 +33,12 @@ class Config
     @environments.find {|env| env.name == env_name }
   end
 
+  def has_request?(env_name)
+    @requests.any? {|env| env.name == env_name }
+  end
+
+  def get_request(env_name)
+    @requests.find {|env| env.name == env_name }
+  end
+
 end
