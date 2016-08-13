@@ -54,3 +54,4 @@ req fetchTervas
 - multiple configured payloads per route/request?
 - commandline variable overrides
   `req fetchTervas battery_percentage=100`
+- `req init` command to generate a Reqfile stub

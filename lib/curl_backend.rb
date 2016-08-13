@@ -7,7 +7,7 @@ class CurlBackend
 
   def execute
     header_string = @request.headers.map {|key, val| "-H '#{key}: #{val}'"}.join ' '
-    curl_command = "curl -X #{@request.method} #{header_string} #{@curl_options} #{@request.uri}"
+    curl_command = "curl -X #{@request.method.upcase} #{header_string} #{@curl_options} #{@request.uri}"
     system curl_command
   end
 
