@@ -6,7 +6,10 @@ load 'lib/environment.rb'
 load 'lib/request.rb'
 load 'lib/state.rb'
 load 'lib/config.rb'
-load 'lib/request_executor.rb'
+load 'lib/prepared_request.rb'
+load 'lib/request_factory.rb'
+load 'lib/variable_interpolator.rb'
+load 'lib/curl_backend.rb'
 
 STATEFILE = '.reqstate'
 REQFILE = 'Reqfile'
@@ -86,11 +89,14 @@ class Req < Thor
   end
 
   desc "exec REQUESTNAME", "execute request with name REQUESTNAME"
-  option :verbose, type: :boolean, aliases: '-v'
+  option :verbose, aliases: '-v'
+  option :head, aliases: '-I'
   def exec(requestname)
     init
-    executor = RequestExecutor.new requestname, @config, @state, options
-    executor.execute
+    request = @config.get_request(requestname)
+    prepared_request = RequestFactory.create(@config, @state, request)
+    backend = CurlBackend.new prepared_request, options
+    backend.execute
   end
 
   desc "requests", "list all requests"

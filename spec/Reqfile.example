@@ -4,14 +4,26 @@ environments:
     endpoint: https://example.com
     vars:
       app_id: 1
+      environmentvar: 'production'
+    headers:
+      X-req-environment: 'production'
+      X-req-environment-var: '${var}'
   - name: staging
     endpoint: https://staging.example.com
     vars:
       app_id: 2
+      environmentvar: 'staging'
+    headers:
+      X-req-environment: 'staging'
+      X-req-environment-var: '${var}'
   - name: development
     endpoint: https://localhost
     vars:
       app_id: 3
+      environmentvar: 'development'
+    headers:
+      X-req-environment: 'development'
+      X-req-environment-var: '${var}'
 
 contexts:
   - name: context1
@@ -19,15 +31,25 @@ contexts:
       session_token: 123456
       user_id: 12
       username: steven
+      contextvar: 'context1'
+    headers: 
+      X-req-context: 'context1'
+      X-req-context-var: '${var}'
   - name: context2
     vars: 
       session_token: 789012
       user_id: 42
       username: birgit
+      contextvar: 'context2'
+    headers: 
+      X-req-context: 'context2'
+      X-req-context-var: '${var}'
 
 requests:
   - name: exampleRequest
     path: /example/path
     method: GET
     headers:
+      X-req-request: 'exampleRequest'
+      X-req-request-var: '${var}'
       Content-Type: "application/json"
