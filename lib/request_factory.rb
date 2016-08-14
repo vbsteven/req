@@ -4,7 +4,6 @@ class RequestFactory
     context = config.get_context(state.context) || Context.new
 
     variables = merge_variables(environment, context, request, state.variables)
-    puts variables
     interpolator = VariableInterpolator.new(variables)
 
     PreparedRequest.new({

@@ -118,6 +118,8 @@ $ curl -X POST -H 'X-App-Id: xeiHahK4feeH2oiZ' -H 'Content-Type: application/jso
 
 **req exec NAME** - Execute request with name NAME
 
+`req exec NAME` supports `--verbose/-v` and `--head/-I` options which are passed straight on to curl
+
 # Configuration Reference
 
 ## Variable interpolation
@@ -134,7 +136,6 @@ When a variable is defined more than once the following priorities are used:
 custom variables > request variables > context variables > environment variables
 ```
 
-
 # TODO
 
 This project is a little weekend hacking project, I still have some plans for improvement
@@ -143,4 +144,5 @@ This project is a little weekend hacking project, I still have some plans for im
 - Support ${!...} syntax for shell command interpolation
 - `req init` for generating an empty Reqfile
 - Add a cli parameter for showing the curl command
+- Pass extra arguments to curl
 

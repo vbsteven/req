@@ -10,7 +10,6 @@ class CurlBackend
     data_string = @request.data ? "-d '#{@request.data}'" : ""
 
     curl_command = "curl -X #{@request.method.upcase} #{header_string} #{data_string} #{@curl_options}  #{@request.uri}"
-    puts curl_command
     system curl_command
   end
 

@@ -99,6 +99,7 @@ class Req < Thor
   option :head, aliases: '-I'
   def exec(requestname)
     init
+    valid_for_execution?
     request = @config.get_request(requestname)
     prepared_request = RequestFactory.create(@config, @state, request)
     backend = CurlBackend.new prepared_request, options
@@ -119,6 +120,16 @@ class Req < Thor
       if File.exist? '.reqstate'
         @state = YAML.load(File.read(STATEFILE))
       end
+    end
+
+    def valid_for_execution?
+      env = @config.get_environment(@state.environment)
+      puts "No valid environment specified, use req environment NAME to choose an environment" if env.nil?
+      exit 1 if env.nil?
+
+      ctx = @config.get_context(@state.context)
+      puts "No valid context specified, use req context NAME to choose a context" if ctx.nil?
+      exit 1 if ctx.nil?
     end
 
     def save_state
