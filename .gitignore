@@ -3,3 +3,4 @@ Reqfile
 .reqstate
 Gemfile.lock
 
+*.gem

@@ -81,5 +81,23 @@ describe 'RequestFactory' do
     end
   end
 
+  context 'POST request' do
+    config = example_config
+    state = example_state
+    state.variables.store 'var1', 'value'
+    request = Request.new name: 'test', path: '/path', method: 'post', data: '{"key":"${var1}"}'
+    request.method = 'post'
+
+    req = RequestFactory.create(config, state, request)
+
+    it 'has a valid data attribute' do
+      expect(req.data).to be_kind_of String
+    end
+
+    it 'interpolates values in data' do
+      expect(req.data).to eq '{"key":"value"}'
+    end
+  end
+
   
 end

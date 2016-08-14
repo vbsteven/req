@@ -4,12 +4,14 @@ class RequestFactory
     context = config.get_context(state.context) || Context.new
 
     variables = merge_variables(environment, context, request, state.variables)
+    puts variables
     interpolator = VariableInterpolator.new(variables)
 
     PreparedRequest.new({
       headers: build_headers(environment, context, request, interpolator),
       method: request.method.downcase.to_sym,
-      uri: build_uri(environment, context, request, interpolator)
+      uri: build_uri(environment, context, request, interpolator),
+      data: build_data(request, interpolator)
     })
   end
 
@@ -30,6 +32,12 @@ class RequestFactory
   def self.build_uri(environment, context, request, interpolator)
     uri = environment.endpoint + request.path
     interpolator.interpolate(uri)
+  end
+
+  def self.build_data(request, interpolator)
+    return nil if request.data.nil?
+
+    interpolator.interpolate(request.data)
   end
 
 end

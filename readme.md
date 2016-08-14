@@ -55,3 +55,5 @@ req fetchTervas
 - commandline variable overrides
   `req fetchTervas battery_percentage=100`
 - `req init` command to generate a Reqfile stub
+- ${env.VAR_NAME}` for environment variables
+- use ${! for shell interpolation}
