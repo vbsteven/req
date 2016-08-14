@@ -2,7 +2,8 @@ Gem::Specification.new do |s|
   s.name        = 'req-cli'
   s.version     = '0.0.1'
   s.date        = '2016-08-13'
-  s.summary     = "Curl wrapper that reads request parameters from a Reqfile"
+  s.summary     = "CLI tool for templating HTTP requests from a config file and execute them with curl.
+"
   s.description = ""
   s.authors     = ["Steven Van Bael"]
   s.email       = 'steven@quantus.io'

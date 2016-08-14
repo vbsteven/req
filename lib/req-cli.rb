@@ -84,7 +84,7 @@ class Req < Thor
     init
     puts "context: #{@state.context}"
     puts "environment: #{@state.environment}"
-    puts "variables: " # TODO print custom variables
+    puts "variables: "
     @state.variables.each { |key,val| puts "    #{key}: #{val}" }
   end
 
@@ -108,8 +108,7 @@ class Req < Thor
   desc "requests", "list all requests"
   def requests
     init
-    # TODO provide nice formatting with each column aligned
-    @config.requests.each {|req| puts "#{req.name} - #{req.method} #{req.path}"}
+    @config.requests.each {|req| puts "#{req.name} \t#{req.method} \t#{req.path}"}
   end
 
   no_commands do

@@ -8,7 +8,9 @@ Req-cli takes its configuration from a Reqfile. This file is typically in the ro
 
 Req can be installed through RubyGems
 
-```gem install req-cli```
+```
+gem install req-cli
+```
 
 # Example Reqfile
 
@@ -116,6 +118,21 @@ $ curl -X POST -H 'X-App-Id: xeiHahK4feeH2oiZ' -H 'Content-Type: application/jso
 
 **req exec NAME** - Execute request with name NAME
 
+# Configuration Reference
+
+## Variable interpolation
+
+Variables can be inserted by using `${variable_name}` tags in the Reqfile. Variable tags are only valid in `endpoint`, `headers` and `data` attributes.
+
+Only `a-z`, `A-Z`, `-` and `_` are valid characters in variable names
+
+Variables can be defined as `custom variables` using `req variable KEY VALUE` or in the Reqfile on `environments`, `contexts` and `requests`.
+
+When a variable is defined more than once the following priorities are used:
+
+```
+custom variables > request variables > context variables > environment variables
+```
 
 
 # TODO
