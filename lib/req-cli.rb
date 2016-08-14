@@ -73,6 +73,12 @@ class Req < Thor
     save_state
   end
 
+  desc "variables", "list all custom variables"
+  def variables
+    init
+    @state.variables.each {|key, val| put "#{key}: #{val}" }
+  end
+
   desc "status", "print current environment and context info"
   def status
     init
