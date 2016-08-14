@@ -12,7 +12,7 @@ Req can be installed through RubyGems
 
 # Example Reqfile
 
-```
+```yaml
 ---
 environments:
   - name: production
@@ -25,7 +25,7 @@ environments:
   - name: development
     endpoint: "http://localhost:3000"
     vars:
-      env: integration
+      env: development
     headers:
       X-App-Id: bienaeGaishe0EeC
 
@@ -66,7 +66,7 @@ requests:
 
 Given the above Reqfile, req-cli can be used like this
 
-```
+```bash
 # use production environment
 $ req environment production
 
@@ -90,7 +90,7 @@ $ req exec examplePost
 
 This will invoke Curl like this: 
 
-```
+```bash
 $ curl -X POST -H 'X-App-Id: xeiHahK4feeH2oiZ' -H 'Content-Type: application/json' -H 'X-Parse-Session-Token: naivahquooQuoo5OhFue5Pii3aexoh' -d '{
     "title": "My Title",
     "author": "steven"
