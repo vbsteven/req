@@ -50,7 +50,7 @@ describe 'Req' do
 
   context 'requests command' do
     it 'outputs request info' do
-      expect {req.requests}.to output(/exampleRequest - GET \/example\/path/).to_stdout
+      expect {req.requests}.to output(/^exampleRequest[\s]+GET[\s]+\/example\/path$/).to_stdout
     end
   end
 

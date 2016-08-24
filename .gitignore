@@ -2,5 +2,5 @@
 Reqfile
 .reqstate
 Gemfile.lock
-
+/pkg/
 *.gem
