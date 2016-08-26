@@ -4,5 +4,4 @@ class State
   def initialize
     @variables = {}
   end
-
 end

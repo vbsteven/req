@@ -1,5 +1,4 @@
 class VariableInterpolator
-
   attr_accessor :variables
 
   def initialize(variables = {})
@@ -12,5 +11,4 @@ class VariableInterpolator
       variables[var]
     end
   end
-
 end

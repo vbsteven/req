@@ -1,6 +1,6 @@
 
 def example_config
-  Config.create_from_yaml(File.read('spec/Reqfile.example'))
+  ConfigFactory.build_from_yaml(File.read('spec/Reqfile.example'))
 end
 
 def example_state
@@ -9,7 +9,6 @@ def example_state
   state.environment = 'production'
   state
 end
-
 
 describe 'RequestFactory' do
   context 'create' do
@@ -60,7 +59,7 @@ describe 'RequestFactory' do
       expect(req.headers['X-custom-2']).to eq 'context1'
     end
 
-    it 'applies var interpolation with custom variables' do 
+    it 'applies var interpolation with custom variables' do
       expect(req.headers['X-custom-3']).to eq 'custom_value'
     end
 
@@ -98,6 +97,4 @@ describe 'RequestFactory' do
       expect(req.data).to eq '{"key":"value"}'
     end
   end
-
-  
 end

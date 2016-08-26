@@ -1,7 +1,10 @@
 describe 'Environment' do
   context 'initialize' do
-
-    let (:env) { Environment.new name: 'env', endpoint: 'http://localhost/', vars: { key: 'value' } }
+    let(:env) do
+      Environment.new name: 'env',
+                      endpoint: 'http://localhost/',
+                      vars: { key: 'value' }
+    end
 
     it 'extracts name from initializer hash' do
       expect(env.name).to eq 'env'
@@ -16,6 +19,5 @@ describe 'Environment' do
       expect(env.variables.keys.first).to eq :key
       expect(env.variables[:key]).to eq 'value'
     end
-
   end
 end

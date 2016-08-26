@@ -10,13 +10,12 @@ require 'prepared_request'
 require 'request_factory'
 require 'variable_interpolator'
 require 'curl_backend'
+require 'config_factory'
 
 STATEFILE = '.reqstate'
 REQFILE = 'Reqfile'
 
-
 class Req < Thor
-
   attr_accessor :config, :state
   @config = nil
   @state = nil
@@ -28,13 +27,13 @@ class Req < Thor
     req
   end
 
-  desc "contexts", "list all contexts"
+  desc 'contexts', 'list all contexts'
   def contexts
-    init # TODO avoid this
-    @config.contexts.each {|ctx| puts ctx.name }
+    init # TODO: avoid this
+    @config.contexts.each { |ctx| puts ctx.name }
   end
 
-  desc "context NAME", "switch to context NAME"
+  desc 'context NAME', 'switch to context NAME'
   def context(name)
     init
     if @config.contexts.any? { |ctx| ctx.name == name }
@@ -42,59 +41,59 @@ class Req < Thor
       @state.context = name
       save_state
     else
-      puts "context not found"
+      puts 'context not found'
       exit 1
     end
   end
 
-  desc "environments", "list all environments"
+  desc 'environments', 'list all environments'
   def environments
     init
-    @config.environments.each {|env| puts env.name }
+    @config.environments.each { |env| puts env.name }
   end
 
-  desc "environment", "switch to environment"
+  desc 'environment', 'switch to environment'
   def environment(name)
     init
-    if @config.has_environment? name
+    if @config.environment? name
       puts "switching to environment #{name}"
       @state.environment = name
       save_state
     else
-      puts "environment not found"
+      puts 'environment not found'
       exit 1
     end
   end
 
-  desc "variable NAME VALUE", "add variable with key NAME and value VALUE"
+  desc 'variable NAME VALUE', 'add variable with key NAME and value VALUE'
   def variable(name, value)
     init
     @state.variables[name] = value
     save_state
   end
 
-  desc "variables", "list all custom variables"
+  desc 'variables', 'list all custom variables'
   def variables
     init
-    @state.variables.each {|key, val| put "#{key}: #{val}" }
+    @state.variables.each { |key, val| put "#{key}: #{val}" }
   end
 
-  desc "status", "print current environment and context info"
+  desc 'status', 'print current environment and context info'
   def status
     init
     puts "context: #{@state.context}"
     puts "environment: #{@state.environment}"
-    puts "variables: "
-    @state.variables.each { |key,val| puts "    #{key}: #{val}" }
+    puts 'variables: '
+    @state.variables.each { |key, val| puts "    #{key}: #{val}" }
   end
 
-  desc "clear", "clear current context, environment and vars"
+  desc 'clear', 'clear current context, environment and vars'
   def clear
     @state = State.new
     save_state
   end
 
-  desc "exec REQUESTNAME", "execute request with name REQUESTNAME"
+  desc 'exec REQUESTNAME', 'execute request with name REQUESTNAME'
   option :verbose, aliases: '-v'
   option :head, aliases: '-I'
   def exec(requestname)
@@ -106,29 +105,27 @@ class Req < Thor
     backend.execute
   end
 
-  desc "requests", "list all requests"
+  desc 'requests', 'list all requests'
   def requests
     init
-    @config.requests.each {|req| puts "#{req.name} \t#{req.method} \t#{req.path}"}
+    @config.requests.each { |req| puts "#{req.name} \t#{req.method} \t#{req.path}" }
   end
 
   no_commands do
     def init
       return if @config
       @state = State.new
-      @config = Config.create_from_yaml(File.read(REQFILE))
-      if File.exist? '.reqstate'
-        @state = YAML.load(File.read(STATEFILE))
-      end
+      @config = ConfigFactory.build_from_yaml(File.read(REQFILE))
+      @state = YAML.load(File.read(STATEFILE)) if File.exist? '.reqstate'
     end
 
     def valid_for_execution?
       env = @config.get_environment(@state.environment)
-      puts "No valid environment specified, use req environment NAME to choose an environment" if env.nil?
+      puts 'No valid environment specified, use req environment NAME to choose an environment' if env.nil?
       exit 1 if env.nil?
 
       ctx = @config.get_context(@state.context)
-      puts "No valid context specified, use req context NAME to choose a context" if ctx.nil?
+      puts 'No valid context specified, use req context NAME to choose a context' if ctx.nil?
       exit 1 if ctx.nil?
     end
 

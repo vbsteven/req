@@ -1,6 +1,5 @@
 class PreparedRequest
-
-  attr_accessor :headers, :uri, :method, :data
+  attr_reader :headers, :uri, :method, :data
 
   def initialize(options={})
     @headers = options[:headers] || {}
@@ -14,5 +13,4 @@ class PreparedRequest
   # string with full request URI
 
   # symbol :get, :post, :put, :delete
-
 end

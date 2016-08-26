@@ -1,4 +1,4 @@
-class RequestFactory 
+class RequestFactory
   def self.create(config, state, request)
     environment = config.get_environment(state.environment) || Environment.new
     context = config.get_context(state.context) || Context.new
@@ -6,12 +6,12 @@ class RequestFactory
     variables = merge_variables(environment, context, request, state.variables)
     interpolator = VariableInterpolator.new(variables)
 
-    PreparedRequest.new({
+    PreparedRequest.new(
       headers: build_headers(environment, context, request, interpolator),
       method: request.method.downcase.to_sym,
-      uri: build_uri(environment, context, request, interpolator),
+      uri: build_uri(environment, request, interpolator),
       data: build_data(request, interpolator)
-    })
+    )
   end
 
   def self.merge_variables(environment, context, request, custom_variables)
@@ -23,12 +23,12 @@ class RequestFactory
 
   def self.build_headers(environment, context, request, interpolator)
     environment.headers
-      .merge(context.headers)
-      .merge(request.headers)
-      .map {|key, value| [key, interpolator.interpolate(value)]}.to_h
+               .merge(context.headers)
+               .merge(request.headers)
+               .map { |key, value| [key, interpolator.interpolate(value)] }.to_h
   end
 
-  def self.build_uri(environment, context, request, interpolator)
+  def self.build_uri(environment, request, interpolator)
     uri = environment.endpoint + request.path
     interpolator.interpolate(uri)
   end
@@ -38,5 +38,4 @@ class RequestFactory
 
     interpolator.interpolate(request.data)
   end
-
 end

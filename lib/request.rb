@@ -1,15 +1,13 @@
 class Request
   attr_accessor :name, :path, :method, :headers, :variables, :data
-  
-  def initialize(hash)
-    @name = hash[:name] || hash['name'] || ''
-    @path = hash[:path] || hash['path'] || ''
-    @method = hash[:method] || hash['method'] || ''
 
-    @headers = hash[:headers] || hash['headers'] || {}
-    @variables = hash[:vars] || hash['vars'] || {}
-    @data = hash[:data] || hash['data'] || nil
+  def initialize(args)
+    @name = args[:name] || args['name'] || ''
+    @path = args[:path] || args['path'] || ''
+    @method = args[:method] || args['method'] || ''
 
+    @headers = args[:headers] || args['headers'] || {}
+    @variables = args[:vars] || args['vars'] || {}
+    @data = args[:data] || args['data'] || nil
   end
-
 end

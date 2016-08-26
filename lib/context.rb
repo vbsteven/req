@@ -6,5 +6,4 @@ class Context
     @variables = hash[:vars] || hash['vars'] || {}
     @headers = hash[:headers] || hash['headers'] || {}
   end
-
 end
