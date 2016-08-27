@@ -1,5 +1,5 @@
 class VariableInterpolator
-  attr_accessor :variables
+  attr_reader :variables
 
   def initialize(variables = {})
     @variables = variables.map { |key, value| [key.to_sym, value] }.to_h

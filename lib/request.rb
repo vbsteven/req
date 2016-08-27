@@ -1,5 +1,5 @@
 class Request
-  attr_accessor :name, :path, :method, :headers, :variables, :data
+  attr_reader :name, :path, :method, :headers, :variables, :data
 
   def initialize(args)
     @name = args[:name]

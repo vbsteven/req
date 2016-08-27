@@ -1,5 +1,5 @@
 class Context
-  attr_accessor :name, :variables, :headers
+  attr_reader :name, :variables, :headers
 
   def initialize(hash = {})
     @name = hash[:name] || default_context

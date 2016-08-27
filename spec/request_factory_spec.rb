@@ -88,7 +88,6 @@ describe 'RequestFactory' do
     state = example_state
     state.variables.store 'var1', 'value'
     request = Request.new name: 'test', path: '/path', method: 'post', data: '{"key":"${var1}"}'
-    request.method = 'post'
 
     req = RequestFactory.create(config, state, request)
 
