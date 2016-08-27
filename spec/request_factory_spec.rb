@@ -72,8 +72,11 @@ describe 'RequestFactory' do
     end
 
     it 'interpolate variables present in the uri' do
-      config.get_environment(state.environment).endpoint = 'https://${server}'
+      # TODO: this test needs too much setup
+      env = Environment.new name: 'uritest', endpoint: 'https://${server}'
+      config.environments << env
       state.variables.store 'server', 'variableserver'
+      state.environment = 'uritest'
 
       req = RequestFactory.create(config, state, config.requests.first)
       expect(req.uri).to eq 'https://variableserver/example/path'

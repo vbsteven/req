@@ -3,7 +3,7 @@ describe 'Environment' do
     let(:env) do
       Environment.new name: 'env',
                       endpoint: 'http://localhost/',
-                      vars: { key: 'value' }
+                      variables: { key: 'value' }
     end
 
     it 'extracts name from initializer hash' do

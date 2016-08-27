@@ -1,6 +1,6 @@
 describe 'Context' do
   context 'initialize' do
-    let(:ctx) { Context.new name: 'ctx', vars: { key: 'value' } }
+    let(:ctx) { Context.new name: 'ctx', variables: { key: 'value' } }
 
     it 'extracts name from initializer hash' do
       expect(ctx.name).to eq 'ctx'
