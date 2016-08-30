@@ -1,8 +1,6 @@
-EXAMPLE_REQFILE = 'spec/Reqfile.example'
-
 describe 'Req' do
   let(:req) do
-    config = ConfigFactory.build_from_yaml(File.read(EXAMPLE_REQFILE))
+    config = SpecFactory.config
     Req.create_with_config(config)
   end
 
@@ -23,7 +21,7 @@ describe 'Req' do
   context 'context command' do
     it 'changes current context' do
       expect { req.context('context1') }.to output(/.*context1.*/).to_stdout
-      expect(req.state.context).to eq 'context1'
+      expect(req.state.context.name).to eq 'context1'
     end
   end
 
@@ -39,7 +37,7 @@ describe 'Req' do
       expect { req.environment('production') }.to(
         output(/.*production.*/).to_stdout
       )
-      expect(req.state.environment).to eq 'production'
+      expect(req.state.environment.name).to eq 'production'
     end
   end
 

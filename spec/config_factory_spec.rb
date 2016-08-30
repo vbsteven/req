@@ -1,7 +1,7 @@
 describe ConfigFactory do
   context 'load from YAML' do
     it 'correctly parses YAML input string into Config' do
-      yaml = File.read('spec/Reqfile.example')
+      yaml = SpecFactory.config_yaml_str
       config = ConfigFactory.build_from_yaml(yaml)
 
       expect(config).to be_kind_of Config

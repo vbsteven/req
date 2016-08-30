@@ -1,9 +1,9 @@
 class RequestFactory
   def self.create(config, state, request)
-    environment = config.get_environment(state.environment) || Environment.new
-    context = config.get_context(state.context) || Context.new
+    environment = state.environment
+    context = state.context
 
-    variables = merge_variables(environment, context, request, state.variables)
+    variables = merge_variables(environment, context, request, state.custom_variables)
     interpolator = VariableInterpolator.new(variables)
 
     PreparedRequest.new(

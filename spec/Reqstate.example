@@ -1,0 +1,5 @@
+---
+environment: 'production'
+context: 'context1'
+custom_variables:
+  custom_var1: 'custom value 1'

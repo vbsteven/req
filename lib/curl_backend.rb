@@ -16,7 +16,7 @@ class CurlBackend
     opts = ''
 
     opts += '--verbose ' if options.key? 'verbose'
-    opts += ' --head ' if opions.key? 'head'
+    opts += ' --head ' if options.key? 'head'
 
     opts
   end

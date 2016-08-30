@@ -1,4 +1,7 @@
-describe 'Context' do
+
+describe Context do
+  it_behaves_like 'VariableProvider'
+
   context 'initialize' do
     let(:ctx) { Context.new name: 'ctx', variables: { key: 'value' } }
 

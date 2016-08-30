@@ -1,4 +1,6 @@
-describe 'Environment' do
+describe Environment do
+  it_behaves_like 'VariableProvider'
+
   context 'initialize' do
     let(:env) do
       Environment.new name: 'env',

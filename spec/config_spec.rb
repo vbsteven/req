@@ -1,7 +1,7 @@
-describe 'Config class' do
+describe Config do
 
   context 'context methods' do
-    let(:config) { ConfigFactory.build_from_yaml(File.read('spec/Reqfile.example')) }
+    let(:config) { SpecFactory.config }
 
     it 'implements context?' do
       expect(config.context?('context1')).to be
@@ -36,4 +36,13 @@ describe 'Config class' do
       expect(config.get_request('bogus_request')).to be_nil
     end
   end
+
+  #context 'variables method' do
+    #it 'includes variables from environments in variables' do
+      #env = Environment.new name: 'test',
+                            #variables: {key1: 'val1'}
+      #config = Config.new(environments: [env])
+      #expect(config.variables).to have_key :key1
+    #end
+  #end
 end

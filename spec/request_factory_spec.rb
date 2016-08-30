@@ -1,21 +1,9 @@
-
-def example_config
-  ConfigFactory.build_from_yaml(File.read('spec/Reqfile.example'))
-end
-
-def example_state
-  state = State.new
-  state.context = 'context1'
-  state.environment = 'production'
-  state
-end
-
 describe 'RequestFactory' do
   context 'create' do
-    config = example_config
-    state = example_state
-    state.variables.store 'var', 'custom_value'
-    state.variables.store 'customvar', 'custom_value'
+    config = SpecFactory.config
+    state = SpecFactory.state
+    state.custom_variables.store 'var', 'custom_value'
+    state.custom_variables.store 'customvar', 'custom_value'
     request = config.requests.first
     request.headers['X-custom-1'] = '${environmentvar}'
     request.headers['X-custom-2'] = '${contextvar}'
@@ -75,8 +63,8 @@ describe 'RequestFactory' do
       # TODO: this test needs too much setup
       env = Environment.new name: 'uritest', endpoint: 'https://${server}'
       config.environments << env
-      state.variables.store 'server', 'variableserver'
-      state.environment = 'uritest'
+      state.custom_variables.store 'server', 'variableserver'
+      state.environment = env
 
       req = RequestFactory.create(config, state, config.requests.first)
       expect(req.uri).to eq 'https://variableserver/example/path'
@@ -84,9 +72,9 @@ describe 'RequestFactory' do
   end
 
   context 'POST request' do
-    config = example_config
-    state = example_state
-    state.variables.store 'var1', 'value'
+    config = SpecFactory.config
+    state = SpecFactory.state
+    state.custom_variables.store 'var1', 'value'
     request = Request.new name: 'test', path: '/path', method: 'post', data: '{"key":"${var1}"}'
 
     req = RequestFactory.create(config, state, request)

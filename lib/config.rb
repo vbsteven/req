@@ -1,7 +1,7 @@
 class Config
   attr_reader :contexts, :environments, :requests
 
-  def initialize(args)
+  def initialize(args = {})
     @contexts = args[:contexts]
     @environments = args[:environments]
     @requests = args[:requests]
@@ -27,4 +27,5 @@ class Config
   def find_by_name(collection, name)
     collection.find { |x| x.name == name }
   end
+
 end
