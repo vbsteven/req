@@ -146,3 +146,4 @@ This project is a little weekend hacking project, I still have some plans for im
 - Add a cli parameter for showing the curl command
 - Pass extra arguments to curl
 
+
